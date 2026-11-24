@@ -1,0 +1,214 @@
+<!DOCTYPE html><html>
+<head>
+<title>ARYA WORLD</title><style>
+body {
+    background: #141414;
+    color: white;
+    font-family: Arial;
+    margin: 15px;
+}
+
+h1 {
+    color: red;
+    text-align: center;
+}
+
+.search {
+    width: 90%;
+    padding: 12px;
+    margin: 15px auto;
+    display: block;
+    border-radius: 8px;
+}
+
+.categories {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.categories button {
+    background: #333;
+    color: white;
+    padding: 10px;
+    margin: 4px;
+    border: none;
+    border-radius: 5px;
+}
+
+.movie-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.movie {
+    background: #292929;
+    width: 140px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+.movie img {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+}
+
+button {
+    cursor: pointer;
+}
+
+.details {
+    display: none;
+    background: #292929;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+
+.details img {
+    width: 180px;
+    border-radius: 8px;
+}
+
+.back {
+    background: red;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+}
+
+</style></head><body><h1>ARYA WORLD</h1><div id="home"><input type="text" id="search"
+class="search"
+placeholder="Search Movies..."
+onkeyup="filterMovies()">
+
+<div class="categories"><button onclick="setCategory('all')">All Movies</button>
+<button onclick="setCategory('bollywood')">Bollywood</button>
+<button onclick="setCategory('hollywood')">Hollywood</button>
+<button onclick="setCategory('south')">South Indian</button>
+
+</div><div class="movie-container"><div class="movie" data-category="hollywood">
+<img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba">
+<h3>Avengers</h3>
+<p>Hollywood</p>
+<button onclick="showDetails('avengers')">Details</button>
+</div><div class="movie" data-category="hollywood">
+<img src="https://images.unsplash.com/photo-1440404653325-ab127d49abc1">
+<h3>Spider-Man</h3>
+<p>Hollywood</p>
+<button onclick="showDetails('spiderman')">Details</button>
+</div><div class="movie" data-category="bollywood">
+<img src="https://images.unsplash.com/photo-1478720568477-152d9b164e26">
+<h3>3 Idiots</h3>
+<p>Bollywood</p>
+<button onclick="showDetails('idiots')">Details</button>
+</div><div class="movie" data-category="south">
+<img src="https://images.unsplash.com/photo-1489599849927-2ee91cede3ba">
+<h3>RRR</h3>
+<p>South Indian</p>
+<button onclick="showDetails('rrr')">Details</button>
+</div></div>
+</div><div class="details" id="details"><button class="back" onclick="goBack()">← Back</button>
+
+<h2 id="movieName"></h2><img id="movieImage"><p id="movieYear"></p><p id="movieRating"></p><p id="movieStory"></p></div><script>
+
+let selectedCategory = "all";
+
+function setCategory(category) {
+    selectedCategory = category;
+    filterMovies();
+}
+
+function filterMovies() {
+
+    let search = document.getElementById("search").value.toLowerCase();
+
+    let movies = document.getElementsByClassName("movie");
+
+    for (let movie of movies) {
+
+        let name = movie.querySelector("h3").innerText.toLowerCase();
+
+        let category = movie.dataset.category;
+
+        let matchSearch = name.includes(search);
+
+        let matchCategory =
+        selectedCategory === "all" ||
+        category === selectedCategory;
+
+        movie.style.display =
+        matchSearch && matchCategory ? "" : "none";
+    }
+}
+
+let movieData = {
+
+avengers: {
+name: "Avengers: Endgame",
+year: "Release Year: 2019",
+rating: "IMDb Rating: 8.4/10",
+image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba",
+story: "The Avengers unite for their final battle to restore balance to the universe."
+},
+
+spiderman: {
+name: "Spider-Man",
+year: "Release Year: 2002",
+rating: "IMDb Rating: 7.4/10",
+image: "https://images.unsplash.com/photo-1440404653325-ab127d49abc1",
+story: "Peter Parker discovers his powers and learns the responsibilities of being a hero."
+},
+
+idiots: {
+name: "3 Idiots",
+year: "Release Year: 2009",
+rating: "IMDb Rating: 8.4/10",
+image: "https://images.unsplash.com/photo-1478720568477-152d9b164e26",
+story: "Three engineering students experience friendship, education and life's challenges."
+},
+
+rrr: {
+name: "RRR",
+year: "Release Year: 2022",
+rating: "IMDb Rating: 7.8/10",
+image: "https://images.unsplash.com/photo-1489599849927-2ee91cede3ba",
+story: "Two revolutionaries form a powerful friendship during the British colonial period."
+}
+
+};
+
+function showDetails(id) {
+
+    let movie = movieData[id];
+
+    document.getElementById("home").style.display = "none";
+
+    document.getElementById("details").style.display = "block";
+
+    document.getElementById("movieName").innerText = movie.name;
+
+    document.getElementById("movieYear").innerText = movie.year;
+
+    document.getElementById("movieRating").innerText = movie.rating;
+
+    document.getElementById("movieImage").src = movie.image;
+
+    document.getElementById("movieStory").innerText = movie.story;
+
+    window.scrollTo(0,0);
+}
+
+function goBack() {
+
+    document.getElementById("details").style.display = "none";
+
+    document.getElementById("home").style.display = "block";
+}
+
+</script></body>
+</html>
